@@ -1,6 +1,6 @@
 [project]
 name = "mqtt-topping-td"
-version = "0.1.5"
+version = "0.1.6"
 description = "TD Component to use the Python library mqtt-topping"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -10,7 +10,7 @@ authors = [
 ]
 
 dependencies = [
-    "mqtt-topping-py @ git+https://github.com/artcom/mqtt-topping-py.git@1.0.5"
+    "mqtt-topping-py @ git+https://github.com/artcom/mqtt-topping-py.git@1.0.6"
 ]
 
 [build-system]
