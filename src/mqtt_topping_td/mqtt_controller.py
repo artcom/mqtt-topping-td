@@ -12,6 +12,7 @@ class MqttController:
         client = self._owner_comp.op('mqttclient')
         self._client_adaptor = TouchDesignerClientAdaptor(client)
         self._mqtt_topping = None
+        self._is_connected_tmp = False
 
     def onInitTD(self):
         self._owner_comp.par.Isconnected = False
@@ -21,6 +22,13 @@ class MqttController:
 
     def onDestroyTD(self):
         self._owner_comp.op('mqttclient').par.active = 0
+
+    def OnProjectPreSave(self):
+        self._is_connected_tmp = self._owner_comp.par.Isconnected.eval()
+        self._owner_comp.par.Isconnected = False
+
+    def OnProjectPostSave(self):
+        self._owner_comp.par.Isconnected = self._is_connected_tmp
 
     def ActivateClient(self):
         self._logger.info("activate")
