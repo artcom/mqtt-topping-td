@@ -13,6 +13,7 @@ class MqttController:
         self._client_adaptor = TouchDesignerClientAdaptor(client)
         self._mqtt_topping = None
         self._is_connected_tmp = False
+        self._needs_reconnect = False
 
     def onInitTD(self):
         self._owner_comp.par.Isconnected = False
@@ -41,6 +42,7 @@ class MqttController:
         self._logger.info("deactivate")
         self._owner_comp.op('mqttclient').par.active = False
         self._owner_comp.par.Isconnected = False
+        self._needs_reconnect = False
 
     def CreateClientId(self):
         app_id = self._owner_comp.op('app_id')[0, 0]
@@ -52,9 +54,17 @@ class MqttController:
     # ------------ MQTT client callbacks ------------
 
     def OnConnect(self):
-        self._logger.info("connected")
-        self._owner_comp.par.Isconnected = True
-        self._owner_comp.DoCallback('onConnect')
+        if self._needs_reconnect:
+            self._logger.info("reconnected")
+            self._needs_reconnect = False
+            self._owner_comp.par.Isconnected = True
+            self._mqtt_topping.refresh_subscriptions()
+            self._logger.info("will refresh subscriptions")
+            self._owner_comp.DoCallback('onReconnect')
+        else:
+            self._logger.info("connected")
+            self._owner_comp.par.Isconnected = True
+            self._owner_comp.DoCallback('onConnect')
 
     def OnConnectionFailure(self, error):
         self._logger.error("connection failure %s", error)
@@ -63,6 +73,7 @@ class MqttController:
         self._owner_comp.DoCallback('onConnectFailure', info)
 
     def OnConnectionLost(self, error):
+        self._needs_reconnect = True
         self._logger.error("connection lost %s", error)
         self._owner_comp.par.Isconnected = False
         info = {'error': error}
