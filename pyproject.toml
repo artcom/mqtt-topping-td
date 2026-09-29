@@ -1,6 +1,6 @@
 [project]
 name = "mqtt-topping-td"
-version = "0.2.2"
+version = "0.2.3"
 description = "TD Component to use the Python library mqtt-topping"
 readme = "README.md"
 requires-python = ">=3.11"

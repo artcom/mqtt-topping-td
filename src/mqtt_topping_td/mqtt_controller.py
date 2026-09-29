@@ -16,9 +16,6 @@ class MqttController:
 
     def onInitTD(self):
         self._owner_comp.par.Isconnected = False
-        if self._owner_comp.par.Autoconnect == 1:
-            self._logger.info("autoconnect")
-            self.ActivateClient()
 
     def onDestroyTD(self):
         self._owner_comp.op('mqttclient').par.active = 0

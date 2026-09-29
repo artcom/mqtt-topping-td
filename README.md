@@ -26,20 +26,19 @@ Load the tox into your project:
 
 Parameters on page "Mqtt":
 
-| Parameter                  | Description                                                                   |
-| :------------------------- | :---------------------------------------------------------------------------- |
-| `Active`                   | Enable / disable MQTT connection                                              |
-| `Autoconnect`              | If set to true the component will establish a connection on start or re-init. |
-| `Is Connected`             | Indicates the current connection status.                                      |
-| `Connect`                  | Establish / re-establish the connection with a new client ID                  |
-| `AppId`                    | App id used for client id                                                     |
-| `TcpBrokerUri`             | Broker uri for TCP connection                                                 |
-| `Keep Aplive Interval`     | Ping interval in seconds to keep the connection alive.                        |
-| `MaxInFlight`              | Max count of messages which can be processed simultaniously                   |
-| `Clean Session`            | Always start with a clean session                                             |
-| `Verify Certificate (TLS)` | Verify TLS certificate against the server                                     |
-| `Username`                 | Username for client                                                           |
-| `Password`                 | Password for client                                                           |
+| Parameter                  | Description                                                  |
+| :------------------------- | :----------------------------------------------------------- |
+| `Active`                   | Enable / disable MQTT connection                             |
+| `Is Connected`             | Indicates the current connection status.                     |
+| `Connect`                  | Establish / re-establish the connection with a new client ID |
+| `AppId`                    | App id used for client id                                    |
+| `TcpBrokerUri`             | Broker uri for TCP connection                                |
+| `Keep Aplive Interval`     | Ping interval in seconds to keep the connection alive.       |
+| `MaxInFlight`              | Max count of messages which can be processed simultaniously  |
+| `Clean Session`            | Always start with a clean session                            |
+| `Verify Certificate (TLS)` | Verify TLS certificate against the server                    |
+| `Username`                 | Username for client                                          |
+| `Password`                 | Password for client                                          |
 
 ## Python API
 
