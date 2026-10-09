@@ -5,7 +5,7 @@ Summary: TD Component to use the Python library mqtt-topping
 Author-email: Julian Krumow <julian.krumow@artcom.de>
 Requires-Python: >=3.11
 Description-Content-Type: text/markdown
-Requires-Dist: mqtt-topping-py@ git+https://github.com/artcom/mqtt-topping-py.git@1.2.3
+Requires-Dist: mqtt-topping-py@ git+https://github.com/artcom/mqtt-topping-py.git@1.2.4
 
 # TouchDesigner MQTT Topping Component
 

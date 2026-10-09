@@ -110,5 +110,5 @@ class MqttController:
     def Unsubscribe(self, topic: str, callback: any):
         self._mqtt_topping.subscribe(topic, callback)
 
-    def Publish(self, topic: str, payload: any, encode: bool = True):
-        self._mqtt_topping.publish(topic, payload, encode=encode)
+    def Publish(self, topic: str, payload: any, qos: int = 2, encode: bool = True):
+        self._mqtt_topping.publish(topic, payload, qos=qos, encode=encode)

@@ -10,7 +10,7 @@ authors = [
 ]
 
 dependencies = [
-    "mqtt-topping-py @ git+https://github.com/artcom/mqtt-topping-py.git@1.2.3"
+    "mqtt-topping-py @ git+https://github.com/artcom/mqtt-topping-py.git@1.2.4"
 ]
 
 [build-system]
