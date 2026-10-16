@@ -14,6 +14,7 @@ class MqttController:
         self._mqtt_topping = None
         self._is_connected_tmp = False
         self._needs_reconnect = False
+        self._is_activating = False
 
     def onInitTD(self):
         self._owner_comp.par.Isconnected = False
@@ -29,14 +30,25 @@ class MqttController:
         self._owner_comp.par.Isconnected = self._is_connected_tmp
 
     def ActivateClient(self):
-        self._logger.info("activate")
-        self._owner_comp.par.Isconnected = False
-        self._mqtt_topping = MqttTopping(self._client_adaptor)
-        self.CreateClientId()
-        if self._owner_comp.op('mqttclient').par.active == 0:
-            self._owner_comp.op('mqttclient').par.active = 1
-        else:
-            self._owner_comp.op('mqttclient').par.reconnect.pulse()
+        # Connect/Active/parameter_trigger can all re-enter this method synchronously
+        # (e.g. the Isconnected write below is itself watched by parameter_trigger),
+        # so guard against duplicate connections and duplicate MqttTopping instances.
+        if self._is_activating:
+            self._logger.debug("activate already in progress, ignoring re-entrant call")
+            return
+        self._is_activating = True
+        try:
+            self._logger.info("activate")
+            self._owner_comp.par.Isconnected = False
+            if self._mqtt_topping is None:
+                self._mqtt_topping = MqttTopping(self._client_adaptor)
+            self.CreateClientId()
+            if self._owner_comp.op('mqttclient').par.active == 0:
+                self._owner_comp.op('mqttclient').par.active = 1
+            else:
+                self._owner_comp.op('mqttclient').par.reconnect.pulse()
+        finally:
+            self._is_activating = False
 
     def DeactivateClient(self):
         self._logger.info("deactivate")
@@ -108,7 +120,7 @@ class MqttController:
         self._mqtt_topping.subscribe(topic, callback, qos=qos, parse=parse)
 
     def Unsubscribe(self, topic: str, callback: any):
-        self._mqtt_topping.subscribe(topic, callback)
+        self._mqtt_topping.unsubscribe(topic, callback)
 
     def Publish(self, topic: str, payload: any, qos: int = 2, encode: bool = True):
         self._mqtt_topping.publish(topic, payload, qos=qos, encode=encode)

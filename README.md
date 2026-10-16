@@ -30,7 +30,7 @@ Parameters on page "Mqtt":
 | :------------------------- | :----------------------------------------------------------- |
 | `Active`                   | Enable / disable MQTT connection                             |
 | `Is Connected`             | Indicates the current connection status.                     |
-| `Connect`                  | Establish / re-establish the connection with a new client ID |
+| `Connect`                  | Establish / re-establish the connection with a new client ID. Re-pulsing while connected reconnects with the existing subscription table intact; it does not drop subscriptions registered by other components. |
 | `AppId`                    | App id used for client id                                    |
 | `TcpBrokerUri`             | Broker uri for TCP connection                                |
 | `Keep Aplive Interval`     | Ping interval in seconds to keep the connection alive.       |
