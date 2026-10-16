@@ -18,6 +18,9 @@ class MqttController:
 
     def onInitTD(self):
         self._owner_comp.par.Isconnected = False
+        if self._owner_comp.par.Autoconnect == 1:
+            self._logger.info("autoconnect")
+            self.ActivateClient()
 
     def onDestroyTD(self):
         self._owner_comp.op('mqttclient').par.active = 0
@@ -34,7 +37,8 @@ class MqttController:
         # (e.g. the Isconnected write below is itself watched by parameter_trigger),
         # so guard against duplicate connections and duplicate MqttTopping instances.
         if self._is_activating:
-            self._logger.debug("activate already in progress, ignoring re-entrant call")
+            self._logger.debug(
+                "activate already in progress, ignoring re-entrant call")
             return
         self._is_activating = True
         try:
